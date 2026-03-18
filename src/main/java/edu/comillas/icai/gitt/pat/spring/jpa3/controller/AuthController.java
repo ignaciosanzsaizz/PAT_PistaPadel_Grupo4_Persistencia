@@ -9,13 +9,10 @@ import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/pistaPadel/auth")
-
 public class AuthController {
-    private final UsuarioService usuarioService;
-
-    public AuthController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
+    
+    @Autowired
+    private UsuarioService usuarioService;
 
     // Público (permitAll en ConfiguracionSeguridad)
     @PostMapping("/register")

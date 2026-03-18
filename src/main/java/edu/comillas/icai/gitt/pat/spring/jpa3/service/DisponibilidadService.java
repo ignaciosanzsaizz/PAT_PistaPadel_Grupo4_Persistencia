@@ -2,6 +2,7 @@ package edu.comillas.icai.gitt.pat.spring.jpa3.service;
 
 import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Pista;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Reserva;
 import edu.comillas.icai.gitt.pat.spring.jpa3.repos.PistaRepository;
@@ -17,29 +18,33 @@ import java.util.Map;
 @Service
 public class DisponibilidadService {
     // Repositorio para consultar las reservas existentes
-    private final ReservaRepository reservaRepository;
+    @Autowired
+    private ReservaRepository reservaRepository;
 
     // Repositorio para obtener todas las pistas en disponibilidad global
-    private final PistaRepository pistaRepository;
+    @Autowired
+    private PistaRepository pistaRepository;
 
     // Horario fijo del club
     private static final LocalTime HORA_APERTURA = LocalTime.of(8, 0);
     private static final LocalTime HORA_CIERRE = LocalTime.of(22, 0);
 
-    public DisponibilidadService(ReservaRepository reservaRepository,
-                                 PistaRepository pistaRepository) {
-        this.reservaRepository = reservaRepository;
-        this.pistaRepository = pistaRepository;
-    }
-
     // Calcula los huecos libres de una pista en una fecha concreta
     public List<String> calcularDisponibilidad(Long idPista, LocalDate fecha) {
 
         // Obtenemos las reservas de esa pista y esa fecha
-        List<Reserva> reservas = reservaRepository.listarPorPistaYFecha(idPista, fecha);
+        List<Reserva> reservasPorFecha = reservaRepository.findByFechaReserva(fecha);
+        List<Reserva> reservas = new ArrayList<>();
+        
+        // Filtramos por la pista específica
+        for (Reserva reserva : reservasPorFecha) {
+            if (reserva.pista != null && reserva.pista.idPista.equals(idPista)) {
+                reservas.add(reserva);
+            }
+        }
 
         // Ordenamos por hora de inicio para recorrer el día correctamente
-        reservas.sort(Comparator.comparing(Reserva::getHoraInicio));
+        reservas.sort(Comparator.comparing(r -> r.horaInicio));
 
         List<String> huecosLibres = new ArrayList<>();
         LocalTime horaActual = HORA_APERTURA;
@@ -48,13 +53,12 @@ public class DisponibilidadService {
 
             // Si la siguiente reserva empieza después de la hora actual,
             // entonces hay un hueco libre
-            if (reserva.getHoraInicio().isAfter(horaActual)) {
-                huecosLibres.add(horaActual + " - " + reserva.getHoraInicio());
+            if (reserva.horaInicio.isAfter(horaActual)) {
+                huecosLibres.add(horaActual + " - " + reserva.horaInicio);
             }
 
             // Avanzamos la hora actual al final de la reserva
-            // Si tu entidad Reserva NO tiene getHoraFin(), usa plusMinutes(...)
-            horaActual = reserva.getHoraFin();
+            horaActual = reserva.horaFin;
         }
 
         // Si todavía queda tiempo hasta el cierre, añadimos el último hueco
@@ -73,8 +77,8 @@ public class DisponibilidadService {
 
         for (Pista pista : pistas) {
             resultado.put(
-                    pista.getIdPista(),
-                    calcularDisponibilidad(pista.getIdPista(), fecha)
+                    pista.idPista,
+                    calcularDisponibilidad(pista.idPista, fecha)
             );
         }
 

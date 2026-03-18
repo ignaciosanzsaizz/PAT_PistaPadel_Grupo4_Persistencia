@@ -2,21 +2,20 @@ package edu.comillas.icai.gitt.pat.spring.jpa3.controller;
 
 import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Pista;
 import edu.comillas.icai.gitt.pat.spring.jpa3.service.PistaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.PrivateKey;
 import java.util.List;
 
 @RestController
 @RequestMapping("/pistaPadel/courts")
 public class PistaController {
-    private final PistaService pistaService;
+    
+    @Autowired
+    private PistaService pistaService;
 
-    public PistaController(PistaService pistaService) {
-        this.pistaService = pistaService;
-    }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")

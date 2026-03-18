@@ -1,12 +1,12 @@
 package edu.comillas.icai.gitt.pat.spring.jpa3.controller;
 
-
 import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Reserva;
 import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Usuario;
-import edu.comillas.icai.gitt.pat.spring.jpa3.repos.PistaRepository;
-import edu.comillas.icai.gitt.pat.spring.jpa3.repos.UsuarioRepository;
 import edu.comillas.icai.gitt.pat.spring.jpa3.service.DisponibilidadService;
+import edu.comillas.icai.gitt.pat.spring.jpa3.service.PistaService;
 import edu.comillas.icai.gitt.pat.spring.jpa3.service.ReservaService;
+import edu.comillas.icai.gitt.pat.spring.jpa3.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,34 +21,25 @@ import java.util.Map;
 @RestController
 @RequestMapping("/pistaPadel")
 public class ReservaController {
-    // Servicio principal para la lógica de reservas
-    private final ReservaService reservaService;
+    
+    @Autowired
+    private ReservaService reservaService;
 
-    // Servicio para calcular disponibilidad
-    private final DisponibilidadService disponibilidadService;
+    @Autowired
+    private DisponibilidadService disponibilidadService;
 
-    // Repositorio de usuarios para obtener el usuario autenticado
-    private final UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioService usuarioService;
 
-    // Repositorio de pistas para consultar disponibilidad global
-    private final PistaRepository pistaRepository;
-
-    public ReservaController(ReservaService reservaService,
-                             DisponibilidadService disponibilidadService,
-                             UsuarioRepository usuarioRepository,
-                             PistaRepository pistaRepository) {
-        this.reservaService = reservaService;
-        this.disponibilidadService= disponibilidadService;
-        this.usuarioRepository = usuarioRepository;
-        this.pistaRepository = pistaRepository;
-    }
+    @Autowired
+    private PistaService pistaService;
 
     // Obtiene el usuario autenticado a partir del email guardado en el contexto de seguridad
     private Usuario obtenerUsuarioActual() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
 
-        return usuarioRepository.buscarPorEmail(email)
+        return usuarioService.buscarPorEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED,
                         "Usuario autenticado no encontrado"
@@ -59,14 +50,8 @@ public class ReservaController {
     @PostMapping("/reservations")
     public Reserva crear(@RequestBody Reserva reserva) {
         Usuario usuario = obtenerUsuarioActual();
-
-        return reservaService.crearReserva(
-                usuario.getIdUsuario(),
-                reserva.getIdPista(),
-                reserva.getFechaReserva(),
-                reserva.getHoraInicio(),
-                reserva.getDuracionMinutos()
-        );
+        reserva.usuario = usuario;
+        return reservaService.crearReserva(reserva);
     }
 
     // Listar reservas:
@@ -76,11 +61,12 @@ public class ReservaController {
     public List<Reserva> listar() {
         Usuario usuario = obtenerUsuarioActual();
 
-        if (usuario.getRol() == Rol.ADMIN) {
+        // Verificar si es ADMIN comparando por el rol
+        if (esAdmin(usuario)) {
             return reservaService.listarTodas();
         }
 
-        return reservaService.listarReservasUsuario(usuario.getIdUsuario());
+        return reservaService.obtenerReservasPorUsuario(usuario.id);
     }
 
     // Obtener una reserva por id si el usuario tiene permiso
@@ -90,8 +76,7 @@ public class ReservaController {
         Reserva reserva = reservaService.obtenerPorId(id);
 
         // Si no es admin, solo puede ver sus propias reservas
-        if (usuario.getRol() != Rol.ADMIN &&
-                !reserva.getIdUsuario().equals(usuario.getIdUsuario())) {
+        if (!esAdmin(usuario) && !reserva.usuario.id.equals(usuario.id)) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "No autorizado"
@@ -105,33 +90,53 @@ public class ReservaController {
     @PatchMapping("/reservations/{id}")
     public Reserva modificar(@PathVariable Long id, @RequestBody Reserva datos) {
         Usuario usuario = obtenerUsuarioActual();
+        Reserva reserva = reservaService.obtenerPorId(id);
 
-        return reservaService.modificarReserva(
-                id,
-                usuario.getIdUsuario(),
-                usuario.getRol() == Rol.ADMIN,
-                datos.getFechaReserva(),
-                datos.getHoraInicio(),
-                datos.getDuracionMinutos()
-        );
+        // Validar permisos: solo admin o dueño puede modificar
+        if (!esAdmin(usuario) && !reserva.usuario.id.equals(usuario.id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "No autorizado"
+            );
+        }
+
+        // Actualizar solo los campos permitidos
+        if (datos.fechaReserva != null) {
+            reserva.fechaReserva = datos.fechaReserva;
+        }
+        if (datos.horaInicio != null) {
+            reserva.horaInicio = datos.horaInicio;
+        }
+        if (datos.duracionMinutos != null) {
+            reserva.duracionMinutos = datos.duracionMinutos;
+        }
+
+        return reservaService.modificarReserva(reserva);
     }
 
     // Cancelar una reserva
     @DeleteMapping("/reservations/{id}")
     public void cancelar(@PathVariable Long id) {
         Usuario usuario = obtenerUsuarioActual();
+        Reserva reserva = reservaService.obtenerPorId(id);
 
-        reservaService.cancelarReserva(
-                id,
-                usuario.getIdUsuario(),
-                usuario.getRol() == Rol.ADMIN
-        );
+        // Validar permisos: solo admin o dueño puede cancelar
+        if (!esAdmin(usuario) && !reserva.usuario.id.equals(usuario.id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "No autorizado"
+            );
+        }
+
+        reservaService.cancelarReserva(id);
     }
 
     // Consultar disponibilidad de una pista concreta en una fecha
     @GetMapping("/courts/{id}/availability")
     public List<String> disponibilidad(@PathVariable Long id,
                                        @RequestParam LocalDate date) {
+        // Validar que la pista existe
+        pistaService.buscarPista(id);
         return disponibilidadService.calcularDisponibilidad(id, date);
     }
 
@@ -143,7 +148,7 @@ public class ReservaController {
         Usuario usuario = obtenerUsuarioActual();
 
         // Solo un administrador puede usar este endpoint
-        if (usuario.getRol() != Rol.ADMIN) {
+        if (!esAdmin(usuario)) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "Solo ADMIN"
@@ -154,13 +159,13 @@ public class ReservaController {
 
         // Aplicamos filtros solo si vienen informados
         if (date != null) {
-            reservas.removeIf(r -> !date.equals(r.getFechaReserva()));
+            reservas.removeIf(r -> !date.equals(r.fechaReserva));
         }
         if (courtId != null) {
-            reservas.removeIf(r -> !courtId.equals(r.getIdPista()));
+            reservas.removeIf(r -> !courtId.equals(r.pista.idPista));
         }
         if (userId != null) {
-            reservas.removeIf(r -> !userId.equals(r.getIdUsuario()));
+            reservas.removeIf(r -> !userId.equals(r.usuario.id));
         }
 
         return reservas;
@@ -172,14 +177,18 @@ public class ReservaController {
         Map<Long, List<String>> resultado = new HashMap<>();
 
         // Recorremos todas las pistas y calculamos su disponibilidad
-        pistaRepository.listar().forEach(pista ->
+        pistaService.listarPistas().forEach(pista ->
                 resultado.put(
-                        pista.getIdPista(),
-                        disponibilidadService.calcularDisponibilidad(pista.getIdPista(), date)
+                        pista.idPista,
+                        disponibilidadService.calcularDisponibilidad(pista.idPista, date)
                 )
         );
 
         return resultado;
     }
 
+    // Método auxiliar para verificar si un usuario es ADMIN
+    private boolean esAdmin(Usuario usuario) {
+        return usuario.rol != null && "ADMIN".equalsIgnoreCase(usuario.rol.nombreRol);
+    }
 }

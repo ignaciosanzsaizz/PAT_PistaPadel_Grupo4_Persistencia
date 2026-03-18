@@ -1,0 +1,12 @@
+edu\comillas\icai\pista_padel\e2e\PistaPadelE2EFullTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\service\ReservaServiceTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\controller\PistaControllerTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\controller\ReservaControllerTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\repos\UsuarioRepositoryTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\service\PistaServiceTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\entity\ReservaTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\service\UsuarioServiceTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\repos\PistaRepositoryTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\repos\RolRepositoryTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\controller\AuthControllerIntegrationTest.class
+edu\comillas\icai\gitt\pat\spring\jpa3\E2E\repos\ReservaRepositoryTest.class

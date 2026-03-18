@@ -8,7 +8,7 @@ import java.util.Date;
 public class Pista {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPista;
+    public Long idPista;
 
     @Column(nullable = false, unique = true)
     public String nombre;

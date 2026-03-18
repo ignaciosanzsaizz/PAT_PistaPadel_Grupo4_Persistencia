@@ -2,6 +2,7 @@ package edu.comillas.icai.gitt.pat.spring.jpa3.controller;
 
 import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Usuario;
 import edu.comillas.icai.gitt.pat.spring.jpa3.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,8 @@ import java.util.List;
 @RequestMapping("/pistaPadel/users")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
-
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
+    @Autowired
+    private UsuarioService usuarioService;
 
     // Regla: solo ADMIN lista usuarios
     @PreAuthorize("hasRole('ADMIN')")

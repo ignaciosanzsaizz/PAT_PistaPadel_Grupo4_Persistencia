@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b085a5b-f0ef-4f7c-96e0-19153d3a943d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/edu/comillas/icai/gitt/pat/spring/jpa3/E2E/service/PistaServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/edu/comillas/icai/gitt/pat/spring/jpa3/E2E/service/ReservaServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/edu/comillas/icai/gitt/pat/spring/jpa3/E2E/service/UsuarioServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/entity/Reserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/entity/Reserva.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/repos/ReservaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/repos/ReservaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/PistaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/PistaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/ReservaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/ReservaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/TareasProgramadas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/TareasProgramadas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/service/UsuarioService.java" afterDir="false" />
-    </list>
+    <list default="true" id="5b085a5b-f0ef-4f7c-96e0-19153d3a943d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,6 +14,9 @@
     <persistenceIdMap>
       <entry key="_C:/Users/lopez/OneDrive - Universidad Pontificia Comillas/Documentos/comillas/Aplicaciones/proyecto/1/PAT_PistaPadel_Grupo4_Persistencia" value="3B8Vq1ylTe467KoS8Q3sA4QuH3T" />
     </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedChatMode">
+    <option name="chatModeId" value="file:///c%3A/snapshot/copilot-intellij/dist/assets/agents/Plan.agent.md" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -69,7 +59,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/lopez/OneDrive - Universidad Pontificia Comillas/Documentos/comillas/Aplicaciones/proyecto/1/PAT_PistaPadel_Grupo4_Persistencia",
@@ -105,7 +95,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1773870871997</updated>
-      <workItem from="1773870874062" duration="975000" />
+      <workItem from="1773870874062" duration="1317000" />
     </task>
     <servers />
   </component>
