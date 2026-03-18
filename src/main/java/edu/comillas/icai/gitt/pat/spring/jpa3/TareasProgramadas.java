@@ -1,4 +1,4 @@
-package edu.comillas.icai.pista_padel.scheduler;
+package edu.comillas.icai.gitt.pat.spring.jpa3;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -34,4 +34,5 @@ public class Usuario {
 
     @Column(nullable = false)
     public Boolean activo;
+
 }
