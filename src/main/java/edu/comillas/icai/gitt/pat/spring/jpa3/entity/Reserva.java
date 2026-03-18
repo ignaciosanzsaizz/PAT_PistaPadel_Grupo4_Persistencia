@@ -10,7 +10,7 @@ import java.time.LocalTime;
 public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idReserva;
+    public Long idReserva;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
