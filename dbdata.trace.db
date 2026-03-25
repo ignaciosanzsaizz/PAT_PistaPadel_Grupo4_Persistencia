@@ -698,3 +698,11 @@ insert into 'role' (id, nombre_rol, descripcion) values (2, 'ADMIN', 'Usuario co
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * [*]FROMUSUARIO"
 Syntax error in SQL statement "SELECT * [*]FROMUSUARIO"; SQL statement:
 SELECT * FROMUSUARIO [42000-232]
+2026-03-25 19:40:22.842188+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "Delete from usuario [*]from id = 4"
+Syntax error in SQL statement "Delete from usuario [*]from id = 4"; SQL statement:
+Delete from usuario from id = 4 [42000-232]
+2026-03-25 19:40:59.312190+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "Delete from USUARIO [*]from id = 4"
+Syntax error in SQL statement "Delete from USUARIO [*]from id = 4"; SQL statement:
+Delete from USUARIO from id = 4 [42000-232]
