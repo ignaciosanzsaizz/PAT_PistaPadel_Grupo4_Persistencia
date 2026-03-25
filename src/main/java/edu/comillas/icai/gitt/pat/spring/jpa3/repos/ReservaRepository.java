@@ -12,6 +12,12 @@ import java.util.List;
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     List<Reserva> findByFechaReserva(LocalDate fechaReserva);
+
+    // Alias de compatibilidad para llamadas antiguas.
+    default List<Reserva> findByFecha(LocalDate fecha) {
+        return findByFechaReserva(fecha);
+    }
+
     List<Reserva> findByUsuario(Usuario usuario);
     List<Reserva> findByUsuario_Id(Long id);
     List<Reserva> findByPista(Pista pista);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="edu.comillas.icai.gitt.pat.spring.jpa3.E2E.controller.AuthControllerIntegrationTest" time="3.65" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="edu.comillas.icai.gitt.pat.spring.jpa3.E2E.controller.AuthControllerIntegrationTest" time="2.892" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -20,7 +20,7 @@
     <property name="user.country" value="MX"/>
     <property name="session.topDirectory" value="C:\Users\lopez\OneDrive - Universidad Pontificia Comillas\Documentos\comillas\Aplicaciones\proyecto\1\PAT_PistaPadel_Grupo4_Persistencia"/>
     <property name="sun.boot.library.path" value="C:\Users\lopez\.jdks\temurin-21.0.10\bin"/>
-    <property name="sun.java.command" value="C:\Users\lopez\AppData\Local\Temp\surefire8358310236688608203\surefirebooter-20260318232836276_3.jar C:\Users\lopez\AppData\Local\Temp\surefire8358310236688608203 2026-03-18T23-28-35_902-jvmRun1 surefire-20260318232836276_1tmp surefire_0-20260318232836276_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\lopez\AppData\Local\Temp\surefire16050129122111545166\surefirebooter-20260325180737810_3.jar C:\Users\lopez\AppData\Local\Temp\surefire16050129122111545166 2026-03-25T18-07-37_627-jvmRun1 surefire-20260325180737810_1tmp surefire_0-20260325180737810_2tmp"/>
     <property name="maven.project.settings" value="${session.rootDirectory}/.mvn/settings.xml"/>
     <property name="jdk.debug" value="release"/>
     <property name="test" value="AuthControllerIntegrationTest"/>
@@ -39,7 +39,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="maven.project.conf" value="${session.rootDirectory}/.mvn"/>
-    <property name="surefire.real.class.path" value="C:\Users\lopez\AppData\Local\Temp\surefire8358310236688608203\surefirebooter-20260318232836276_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\lopez\AppData\Local\Temp\surefire16050129122111545166\surefirebooter-20260325180737810_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.10+7-LTS"/>
@@ -75,10 +75,10 @@
     <property name="maven.user.settings" value="C:\Users\lopez/.m2/settings.xml"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="register_devuelve201_y_usuario_creado" classname="edu.comillas.icai.gitt.pat.spring.jpa3.E2E.controller.AuthControllerIntegrationTest" time="3.62">
-    <system-out><![CDATA[23:28:41.042 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-23:28:41.046 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-23:28:41.056 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 7 ms
+  <testcase name="register_devuelve201_y_usuario_creado" classname="edu.comillas.icai.gitt.pat.spring.jpa3.E2E.controller.AuthControllerIntegrationTest" time="2.856">
+    <system-out><![CDATA[18:07:41.120 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+18:07:41.123 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+18:07:41.129 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 4 ms
 
 MockHttpServletRequest:
       HTTP Method = POST

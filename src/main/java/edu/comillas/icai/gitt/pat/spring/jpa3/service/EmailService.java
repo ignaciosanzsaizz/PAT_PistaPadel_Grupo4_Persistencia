@@ -9,6 +9,13 @@ import org.springframework.stereotype.Service;
 public class EmailService {
     private static final Logger log = LoggerFactory.getLogger(EmailService.class);
 
+    public void enviarCorreo(String destinatario, String asunto, String mensaje) {
+        // Implementacion temporal: registra el envio para entorno de desarrollo.
+        log.info("ENVIANDO EMAIL A: {}", destinatario);
+        log.info("Asunto: {}", asunto);
+        log.info("Cuerpo: {}", mensaje);
+    }
+
     public void enviarConfirmacion(Reserva reserva) {
         log.info("ENVIANDO EMAIL A: {}", reserva.usuario.email);
         log.info("Cuerpo: Estimado {}, su reserva para la pista {} el día {} ha sido confirmada.",

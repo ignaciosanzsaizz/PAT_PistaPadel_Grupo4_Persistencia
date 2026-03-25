@@ -1,33 +1,113 @@
 package edu.comillas.icai.gitt.pat.spring.jpa3.service;
 
+import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Rol;
 import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Usuario;
+import edu.comillas.icai.gitt.pat.spring.jpa3.repos.RolRepository;
 import edu.comillas.icai.gitt.pat.spring.jpa3.repos.UsuarioRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
 public class UsuarioService {
     private static final Logger log = LoggerFactory.getLogger(UsuarioService.class);
-    
+    private static final String ROL_POR_DEFECTO = "USER";
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private RolRepository rolRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Transactional
     public Usuario registrar(Usuario usuario) {
+        if (usuario == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Body de usuario requerido");
+        }
+
+        usuario.email = normalizar(usuario.email);
+        usuario.nombre = normalizar(usuario.nombre);
+        usuario.apellidos = normalizar(usuario.apellidos);
+        usuario.telefono = normalizar(usuario.telefono);
+
         log.debug("Intentando registrar usuario con email: {}", usuario.email);
+
+        if (isBlank(usuario.nombre) || isBlank(usuario.apellidos) || isBlank(usuario.email)
+                || isBlank(usuario.password) || isBlank(usuario.telefono)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "nombre, apellidos, email, password y telefono son obligatorios");
+        }
+
         if (usuarioRepository.findByEmail(usuario.email).isPresent()) {
             log.error("Error al registrar usuario: El email {} ya existe", usuario.email);
-            throw new RuntimeException("El usuario ya existe");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario ya existe");
         }
-        log.info("Usuario {} registrado correctamente", usuario.nombre);
-        return usuarioRepository.save(usuario);
+
+        if (!usuario.password.startsWith("{")) {
+            usuario.password = passwordEncoder.encode(usuario.password);
+        }
+
+        if (usuario.rol == null || isBlank(usuario.rol.nombreRol)) {
+            usuario.rol = obtenerOCrearRol(ROL_POR_DEFECTO);
+        } else {
+            usuario.rol = obtenerOCrearRol(usuario.rol.nombreRol);
+        }
+
+        if (usuario.fechaRegistro == null) {
+            usuario.fechaRegistro = new Date();
+        }
+        if (usuario.activo == null) {
+            usuario.activo = true;
+        }
+
+        try {
+            Usuario guardado = usuarioRepository.save(usuario);
+            log.info("Usuario {} registrado correctamente", guardado.nombre);
+            return guardado;
+        } catch (DataIntegrityViolationException e) {
+            log.error("Error de integridad al registrar usuario {}", usuario.email, e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Datos de registro invalidos o incompletos", e);
+        }
+    }
+
+    private Rol obtenerOCrearRol(String nombreRol) {
+        String nombreNormalizado = normalizar(nombreRol);
+        if (isBlank(nombreNormalizado)) {
+            nombreNormalizado = ROL_POR_DEFECTO;
+        }
+        nombreNormalizado = nombreNormalizado.toUpperCase(Locale.ROOT);
+        final String nombreRolFinal = nombreNormalizado;
+
+        return rolRepository.findByNombreRol(nombreRolFinal)
+                .orElseGet(() -> {
+                    Rol nuevoRol = new Rol();
+                    nuevoRol.nombreRol = nombreRolFinal;
+                    nuevoRol.descripcion = "Rol creado automaticamente";
+                    return rolRepository.save(nuevoRol);
+                });
+    }
+
+    private static String normalizar(String valor) {
+        return valor == null ? null : valor.trim();
+    }
+
+    private static boolean isBlank(String valor) {
+        return valor == null || valor.isBlank();
     }
 
     @Transactional

@@ -43,7 +43,7 @@ public class TareasProgramadas {
 
         LocalDate hoy = LocalDate.now();
 
-        List<Reserva> reservas = reservaRepository.findByFecha(hoy);
+        List<Reserva> reservas = reservaRepository.findByFechaReserva(hoy);
 
         for (Reserva r : reservas) {
             try {
