@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin(origins = "http://localhost:63342")
 @RestController
 @RequestMapping("/pistaPadel")
 public class ReservaController {

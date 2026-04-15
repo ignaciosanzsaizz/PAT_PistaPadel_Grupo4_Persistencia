@@ -4,7 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b085a5b-f0ef-4f7c-96e0-19153d3a943d" name="Changes" comment="" />
+    <list default="true" id="5b085a5b-f0ef-4f7c-96e0-19153d3a943d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/js/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbdata.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/dbdata.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbdata.trace.db" beforeDir="false" afterPath="$PROJECT_DIR$/dbdata.trace.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/js/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/js/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/js/guards.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/js/guards.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/controller/PistaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/controller/PistaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/controller/ReservaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/controller/ReservaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/controller/UsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/comillas/icai/gitt/pat/spring/jpa3/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/controller/PistaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/controller/PistaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/controller/ReservaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/controller/ReservaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/controller/UsuarioController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/controller/UsuarioController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/security/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/service/PistaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/service/PistaService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/service/ReservaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/edu/comillas/icai/gitt/pat/spring/jpa3/service/ReservaService.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +38,13 @@
   </component>
   <component name="CopilotUserSelectedChatMode">
     <option name="chatModeId" value="Agent" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -32,12 +60,16 @@
     &quot;assignee&quot;: &quot;Juan-Pan&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/ignaciosanzsaizz/PAT_PistaPadel_Grupo4_Persistencia.git&quot;,
-    &quot;accountId&quot;: &quot;dd45c514-0caf-47a4-a14d-6caa4ffeb3b4&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ignaciosanzsaizz/PAT_PistaPadel_Grupo4_Persistencia",
+    "accountId": "6f2c3901-7c5c-4cfc-87e3-3f6a2693490f"
   }
-}</component>
+}]]></component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -64,7 +96,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.Jpa3Application.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "admin",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/lopez/OneDrive - Universidad Pontificia Comillas/Documentos/comillas/Aplicaciones/proyecto/1/PAT_PistaPadel_Grupo4_Persistencia",
@@ -85,14 +117,6 @@
       </method>
     </configuration>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="5b085a5b-f0ef-4f7c-96e0-19153d3a943d" name="Changes" comment="" />
@@ -101,6 +125,7 @@
       <option name="presentableId" value="Default" />
       <updated>1773870871997</updated>
       <workItem from="1773870874062" duration="1317000" />
+      <workItem from="1776237729876" duration="13569000" />
     </task>
     <servers />
   </component>

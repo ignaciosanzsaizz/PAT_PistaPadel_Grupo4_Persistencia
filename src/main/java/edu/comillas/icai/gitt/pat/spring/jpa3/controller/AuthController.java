@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
+@CrossOrigin(origins = "http://localhost:63342")
 @RestController
 @RequestMapping("/pistaPadel/auth")
 public class AuthController {
