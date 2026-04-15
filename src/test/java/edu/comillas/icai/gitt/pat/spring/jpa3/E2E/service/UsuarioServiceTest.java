@@ -29,7 +29,6 @@ class UsuarioServiceTest {
         Usuario usuario = new Usuario();
         usuario.email = "nuevo@test.com";
 
-        // Simulamos que el email NO existe
         when(usuarioRepository.findByEmail(usuario.email)).thenReturn(Optional.empty());
         when(usuarioRepository.save(usuario)).thenReturn(usuario);
 
@@ -44,10 +43,8 @@ class UsuarioServiceTest {
         Usuario usuario = new Usuario();
         usuario.email = "existe@test.com";
 
-        // Simulamos que el email YA existe
         when(usuarioRepository.findByEmail(usuario.email)).thenReturn(Optional.of(usuario));
 
-        // Verificamos que lanza la excepción que programamos en el Service
         assertThrows(RuntimeException.class, () -> {
             usuarioService.crearUsuario(usuario);
         });

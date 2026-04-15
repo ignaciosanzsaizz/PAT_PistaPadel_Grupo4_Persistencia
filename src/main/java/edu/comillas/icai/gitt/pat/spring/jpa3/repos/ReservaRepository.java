@@ -13,7 +13,6 @@ import java.util.List;
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     List<Reserva> findByFechaReserva(LocalDate fechaReserva);
 
-    // Alias de compatibilidad para llamadas antiguas.
     default List<Reserva> findByFecha(LocalDate fecha) {
         return findByFechaReserva(fecha);
     }

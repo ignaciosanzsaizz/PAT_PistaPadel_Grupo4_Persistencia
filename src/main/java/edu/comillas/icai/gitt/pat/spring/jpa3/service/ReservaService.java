@@ -6,8 +6,12 @@ import edu.comillas.icai.gitt.pat.spring.jpa3.repos.ReservaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,8 +29,8 @@ public class ReservaService {
     public Reserva crearReserva(Reserva reserva) {
         log.debug("Iniciando proceso de reserva para usuario: {}", reserva.usuario.email);
 
-        // Lógica de negocio de la entidad
         reserva.calcularHoraFin();
+        validarSolapeReserva(reserva, null);
         reserva.estado = EstadoReserva.ACTIVA;
         reserva.fechaCreacion = LocalDateTime.now();
 
@@ -34,7 +38,6 @@ public class ReservaService {
             Reserva guardada = reservaRepository.save(reserva);
             log.info("Reserva ID {} creada con éxito", guardada.idReserva);
 
-            // Notificar por email
             emailService.enviarConfirmacion(guardada);
             return guardada;
         } catch (Exception e) {
@@ -51,7 +54,48 @@ public class ReservaService {
     @Transactional
     public Reserva modificarReserva(Reserva cambios) {
         log.debug("Modificando reserva ID: {}", cambios.idReserva);
+        cambios.calcularHoraFin();
+        validarSolapeReserva(cambios, cambios.idReserva);
         return reservaRepository.save(cambios);
+    }
+
+    private void validarSolapeReserva(Reserva candidata, Long idReservaActual) {
+        if (candidata.pista == null || candidata.pista.idPista == null || candidata.fechaReserva == null
+                || candidata.horaInicio == null || candidata.horaFin == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Datos de reserva incompletos");
+        }
+
+        List<Reserva> reservasPista = reservaRepository.findByPista(candidata.pista);
+
+        for (Reserva existente : reservasPista) {
+            if (existente == null || existente.fechaReserva == null || existente.horaInicio == null
+                    || existente.horaFin == null || existente.estado != EstadoReserva.ACTIVA) {
+                continue;
+            }
+
+            if (!existente.fechaReserva.equals(candidata.fechaReserva)) {
+                continue;
+            }
+
+            if (idReservaActual != null && idReservaActual.equals(existente.idReserva)) {
+                continue;
+            }
+
+            boolean haySolape = seSolapan(
+                    candidata.horaInicio,
+                    candidata.horaFin,
+                    existente.horaInicio,
+                    existente.horaFin
+            );
+
+            if (haySolape) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Slot ocupado para esa pista y fecha");
+            }
+        }
+    }
+
+    private boolean seSolapan(LocalTime inicioA, LocalTime finA, LocalTime inicioB, LocalTime finB) {
+        return inicioA.isBefore(finB) && finA.isAfter(inicioB);
     }
 
     @Transactional

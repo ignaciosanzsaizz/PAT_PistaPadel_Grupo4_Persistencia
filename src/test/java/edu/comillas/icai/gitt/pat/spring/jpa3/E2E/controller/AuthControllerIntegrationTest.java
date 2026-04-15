@@ -1,9 +1,4 @@
 package edu.comillas.icai.gitt.pat.spring.jpa3.E2E.controller;
-
-// Este test comprueba que el endpoint de registro del AuthController procesa correctamente
-// una petición POST con los datos de un usuario, devuelve el estado HTTP 201 Created
-// y responde con el usuario creado en formato JSON.
-
 import edu.comillas.icai.gitt.pat.spring.jpa3.controller.AuthController;
 import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Usuario;
 import edu.comillas.icai.gitt.pat.spring.jpa3.service.UsuarioService;
@@ -35,10 +30,7 @@ public class AuthControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        // Inicializar anotaciones de Mockito
         MockitoAnnotations.openMocks(this);
-
-        // Montamos MockMvc para probar peticiones HTTP sin levantar todo Spring
         mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
     }
 

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/pistaPadel/auth")
 public class AuthController {
@@ -15,14 +15,12 @@ public class AuthController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // Público (permitAll en ConfiguracionSeguridad)
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED) // 201
+    @ResponseStatus(HttpStatus.CREATED)
     public Usuario register(@RequestBody Usuario usuario) {
         return usuarioService.registrar(usuario);
     }
 
-    // Requiere auth (por ConfiguracionSeguridad)
     @GetMapping("/me")
     public Usuario me(Authentication authentication) {
         return usuarioService.obtenerPorEmail(authentication.getName());

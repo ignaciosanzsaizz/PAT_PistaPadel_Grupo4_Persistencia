@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080/pistaPadel'; // Cambia esto por vuestra URL real
+const API_BASE_URL = 'http://localhost:8080/pistaPadel';
 
 async function apiFetch(endpoint, method = 'GET', body = null) {
     const headers = { 'Content-Type': 'application/json' };
@@ -50,6 +50,9 @@ async function apiFetch(endpoint, method = 'GET', body = null) {
 
         return await response.json();
     } catch (error) {
+        if (error.message === 'Failed to fetch') {
+            throw new Error('Error de conexión. El servidor no está respondiendo o hay un problema de CORS.');
+        }
         throw error;
     }
 }

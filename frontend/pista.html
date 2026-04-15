@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de pista</title>
+    <title>Detalle de pista - Padel Club</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
@@ -13,16 +13,24 @@
 <body class="app-page">
 <header class="app-header">
     <div class="app-header-inner">
-        <h1>Detalle de pista</h1>
+        <div class="site-brand">
+            <a href="index.html">Padel Club</a>
+            <small>Detalle y disponibilidad de la pista</small>
+        </div>
         <nav class="app-nav">
             <a href="pistas.html">Volver al listado</a>
-            <a href="profile.html">Mi perfil</a>
-            <button id="logout-btn" class="logout-btn" type="button">Cerrar sesión</button>
+            <div id="session-links" class="session-links"></div>
         </nav>
     </div>
 </header>
 
 <main class="app-main">
+    <section class="content-card">
+        <p class="eyebrow">Pista seleccionada</p>
+        <h1 class="section-heading">Detalle de pista</h1>
+        <p class="section-lead">Consulta la información de la pista, su disponibilidad y reserva directamente desde aquí.</p>
+    </section>
+
     <p id="mensaje-pagina" class="status-message">Cargando información...</p>
 
     <section id="detalle-pista" class="content-card" hidden>
@@ -35,6 +43,28 @@
         </div>
     </section>
 
+    <section id="seccion-reserva" class="content-card" hidden>
+        <h3>Reservar esta pista</h3>
+        <div class="field-row">
+            <div>
+                <label for="reserva-fecha">Fecha</label>
+                <input type="date" id="reserva-fecha">
+            </div>
+            <div>
+                <label for="reserva-hora">Hora de inicio</label>
+                <input type="time" id="reserva-hora">
+            </div>
+            <div>
+                <label for="reserva-duracion">Duración (min)</label>
+                <input type="number" id="reserva-duracion" min="30" step="30" value="60">
+            </div>
+        </div>
+        <div class="card-actions">
+            <button id="btn-reservar-pista" type="button">Reservar pista</button>
+        </div>
+        <p id="mensaje-reserva" class="availability-message"></p>
+    </section>
+
     <section id="seccion-disponibilidad" class="content-card" hidden>
         <h3>Consultar disponibilidad</h3>
 
@@ -44,14 +74,18 @@
                 <input type="date" id="fecha-disponibilidad">
             </div>
 
-            <button id="btn-consultar-disponibilidad" type="button">
-                Consultar disponibilidad
-            </button>
+            <button id="btn-consultar-disponibilidad" type="button">Consultar disponibilidad</button>
         </div>
 
         <p id="mensaje-disponibilidad" class="availability-message"></p>
         <ul id="lista-disponibilidad"></ul>
     </section>
 </main>
+
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        Padel Club - Proyecto PAT | Detalle y disponibilidad
+    </div>
+</footer>
 </body>
 </html>

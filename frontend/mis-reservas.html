@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis reservas - Padel Club</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/guards.js"></script>
+    <script src="js/mis-reservas.js" defer></script>
+</head>
+<body class="app-page">
+<header class="app-header">
+    <div class="app-header-inner">
+        <div class="site-brand">
+            <a href="index.html">Padel Club</a>
+            <small>Tus reservas y sus cambios</small>
+        </div>
+        <nav class="app-nav">
+            <a href="pistas.html">Pistas</a>
+            <a href="profile.html">Mi perfil</a>
+            <a class="js-admin-only" href="admin.html">Admin</a>
+            <button id="logout-btn" class="logout-btn" type="button">Cerrar sesión</button>
+        </nav>
+    </div>
+</header>
+
+<main class="app-main">
+    <section class="content-card">
+        <p class="eyebrow">Control personal</p>
+        <h1 class="section-heading">Mis reservas</h1>
+        <p class="section-lead">Aquí puedes ver, modificar o cancelar tus reservas de forma sencilla.</p>
+    </section>
+
+    <p id="mensaje-pagina" class="status-message">Cargando tus reservas...</p>
+
+    <section id="lista-reservas-container" class="content-card reservation-list" hidden>
+        <div id="lista-reservas" class="reservation-list"></div>
+    </section>
+
+    <section id="modificar-reserva-form" class="content-card" hidden>
+        <h3>Modificar reserva <span id="mod-id-reserva"></span></h3>
+
+        <div class="field-row">
+            <div>
+                <label for="mod-fecha">Nueva fecha</label>
+                <input type="date" id="mod-fecha">
+            </div>
+            <div>
+                <label for="mod-hora">Nueva hora de inicio</label>
+                <input type="time" id="mod-hora">
+            </div>
+            <div>
+                <label for="mod-duracion">Duración (min)</label>
+                <input type="number" id="mod-duracion" step="30" min="30">
+            </div>
+        </div>
+
+        <div class="card-actions">
+            <button id="btn-guardar-cambios" type="button">Guardar cambios</button>
+            <button id="btn-cancelar-cambios" type="button" class="is-secondary">Cancelar</button>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        Padel Club - Proyecto PAT | Gestion de reservas
+    </div>
+</footer>
+</body>
+</html>
+

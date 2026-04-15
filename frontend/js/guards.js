@@ -10,11 +10,6 @@ function requireNoAuth() {
     }
 }
 
-/*
-    Devuelve el nombre del rol del usuario.
-    Sirve tanto si el backend devuelve rol como texto
-    como si devuelve un objeto { nombreRol: 'ADMIN' }.
-*/
 function obtenerNombreRol(user) {
     if (!user || !user.rol) {
         return '';
@@ -31,9 +26,6 @@ function obtenerNombreRol(user) {
     return '';
 }
 
-/*
-    Solo permite entrar si el usuario autenticado es admin.
-*/
 function requireAdmin() {
     if (!AuthService.isLoggedIn()) {
         window.location.replace('login.html');

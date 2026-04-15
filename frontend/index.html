@@ -3,31 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Padel App - Cargando...</title>
+    <title>Padel Club - Inicio</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/auth.js"></script>
 </head>
-<body class="loading-page">
-    <div class="splash-container">
-        <h1>Reserva de Pistas</h1>
-        <p>Verificando tu sesión...</p>
-        <div class="loader"></div>
-    </div>
+<body class="home-page">
+    <header class="site-header">
+        <div class="site-header-inner">
+            <div class="site-brand">
+                <a href="index.html">Padel Club</a>
+                <small>Reserva pistas de forma rápida y sencilla</small>
+            </div>
+            <nav class="site-nav">
+                <a class="js-auth-only" href="pistas.html">Pistas</a>
+                <a class="js-guest-only" href="login.html">Entrar</a>
+                <a class="js-guest-only is-primary" href="register.html">Crear cuenta</a>
+                <a class="js-auth-only" href="profile.html">Mi perfil</a>
+                <a class="js-auth-only js-admin-only" href="admin.html">Admin</a>
+                <button class="button-link is-secondary js-auth-only" type="button" id="home-logout-top">Cerrar sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="home-main">
+        <section class="hero">
+            <div class="hero-panel">
+                <p class="eyebrow">Reserva fácil · interfaz limpia · responsive</p>
+                <h1>Gestiona tus partidos de pádel desde una sola web</h1>
+                <p>
+                    Consulta pistas, revisa disponibilidad, reserva horarios y controla tus reservas desde
+                    una navegación simple y clara.
+                </p>
+                <div class="hero-actions" id="home-actions"></div>
+            </div>
+
+            <aside class="info-panel">
+                <h2 class="section-heading">Qué puedes hacer</h2>
+                <div class="stat-grid">
+                    <article class="stat-card">
+                        <h3>Pistas</h3>
+                        <p>Explora el listado y entra al detalle de cada pista.</p>
+                    </article>
+                    <article class="stat-card">
+                        <h3>Reservas</h3>
+                        <p>Crea, modifica o cancela tus reservas sin complicarte.</p>
+                    </article>
+                    <article class="stat-card">
+                        <h3>Perfil</h3>
+                        <p>Accede a tus datos y vuelve a tu área personal en un clic.</p>
+                    </article>
+                </div>
+            </aside>
+        </section>
+
+    </main>
 
     <script>
-        // Esperamos a que todo cargue
-        window.addEventListener('load', () => {
-            // Damos 1.5 segundos para que el usuario vea la animación (opcional)
-            setTimeout(() => {
-                if (AuthService.isLoggedIn()) {
-                    // Si hay token, al perfil
-                    window.location.replace('profile.html');
-                } else {
-                    // Si no, al login
-                    window.location.replace('login.html');
-                }
-            }, 1500);
+        document.addEventListener('DOMContentLoaded', () => {
+            const homeActions = document.getElementById('home-actions');
+
+            if (AuthService.isLoggedIn()) {
+                homeActions.innerHTML = `
+                    <a class="button-link is-primary" href="profile.html">Ir a mi perfil</a>
+                    <a class="button-link" href="mis-reservas.html">Mis reservas</a>
+                    <a class="button-link js-auth-only" href="pistas.html">Ver pistas</a>
+                    <a class="button-link is-secondary js-admin-only" href="admin.html">Panel admin</a>
+                    <button class="is-secondary" type="button" id="home-logout">Cerrar sesión</button>
+                `;
+
+                document.getElementById('home-logout').addEventListener('click', () => AuthService.logout());
+            } else {
+                homeActions.innerHTML = `
+                    <a class="button-link is-primary" href="login.html">Entrar</a>
+                    <a class="button-link" href="register.html">Crear cuenta</a>
+                `;
+            }
+
+            const topLogout = document.getElementById('home-logout-top');
+            if (topLogout) {
+                topLogout.addEventListener('click', () => AuthService.logout());
+            }
+
+            AuthService.applyNavigationVisibility();
         });
     </script>
+
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            Padel Club - Proyecto PAT | Reserva de pistas de padel
+        </div>
+    </footer>
 </body>
 </html>
