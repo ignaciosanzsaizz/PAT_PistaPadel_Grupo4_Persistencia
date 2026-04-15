@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pistas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/guards.js"></script>
+    <script src="js/pistas.js" defer></script>
+</head>
+<body class="app-page">
+<header class="app-header">
+    <div class="app-header-inner">
+        <h1>Listado de pistas</h1>
+        <nav class="app-nav">
+            <a href="profile.html">Mi perfil</a>
+            <a href="mis-reservas.html">Mis Reservas</a>
+            <button id="logout-btn" class="logout-btn" type="button">Cerrar sesión</button>
+        </nav>
+    </div>
+</header>
+
+<main class="app-main">
+    <p id="mensaje-estado" class="status-message">Cargando pistas...</p>
+    <section id="lista-pistas"></section>
+</main>
+</body>
+</html>
