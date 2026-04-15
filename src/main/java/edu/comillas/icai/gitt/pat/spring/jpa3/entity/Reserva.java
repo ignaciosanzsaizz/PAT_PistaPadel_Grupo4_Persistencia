@@ -32,14 +32,13 @@ public class Reserva {
     @Column(nullable = false)
     public LocalTime horaFin;
 
-    @Enumerated(EnumType.STRING) // esto es para que se guarde en la base de datos con un valor de enum
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     public EstadoReserva estado;
 
     @Column(nullable = false)
     public LocalDateTime fechaCreacion;
 
-    // probar si se calcula la hora fin
     public void calcularHoraFin() {
         if (this.horaInicio != null && this.duracionMinutos != null) {
             this.horaFin = this.horaInicio.plusMinutes(this.duracionMinutos);

@@ -33,9 +33,6 @@ public class TareasProgramadas {
         this.emailService = emailService;
     }
 
-    // ============================================
-    // 1. RECORDATORIO DIARIO (02:00 AM)
-    // ============================================
     @Scheduled(cron = "0 0 2 * * *")
     public void enviarRecordatorioReservas() {
 
@@ -66,9 +63,6 @@ public class TareasProgramadas {
         }
     }
 
-    // ============================================
-    // 2. EMAIL MENSUAL (día 1 a las 02:00)
-    // ============================================
     @Scheduled(cron = "0 0 2 1 * *")
     public void enviarDisponibilidadMensual() {
 
@@ -95,15 +89,11 @@ public class TareasProgramadas {
         }
     }
 
-    // ============================================
-    // 3. TAREA DE MANTENIMIENTO (cada hora)
-    // ============================================
     @Scheduled(fixedRate = 3600000)
     public void revisarReservasCaducadas() {
 
         log.debug("Ejecutando tarea programada: revisión de reservas...");
 
-        // TODO: cancelar reservas no pagadas / expiradas
 
         log.info("Tarea de mantenimiento completada.");
     }

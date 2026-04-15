@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/pistaPadel")
 public class ReservaController {
@@ -34,7 +34,6 @@ public class ReservaController {
     @Autowired
     private PistaService pistaService;
 
-    // Obtiene el usuario autenticado a partir del email guardado en el contexto de seguridad
     private Usuario obtenerUsuarioActual() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
@@ -46,7 +45,6 @@ public class ReservaController {
                 ));
     }
 
-    // Crear una nueva reserva para el usuario autenticado
     @PostMapping("/reservations")
     public Reserva crear(@RequestBody Reserva reserva) {
         Usuario usuario = obtenerUsuarioActual();
@@ -54,14 +52,10 @@ public class ReservaController {
         return reservaService.crearReserva(reserva);
     }
 
-    // Listar reservas:
-    // - ADMIN ve todas
-    // - USER ve solo las suyas
     @GetMapping("/reservations")
     public List<Reserva> listar() {
         Usuario usuario = obtenerUsuarioActual();
 
-        // Verificar si es ADMIN comparando por el rol
         if (esAdmin(usuario)) {
             return reservaService.listarTodas();
         }
@@ -69,13 +63,11 @@ public class ReservaController {
         return reservaService.obtenerReservasPorUsuario(usuario.id);
     }
 
-    // Obtener una reserva por id si el usuario tiene permiso
     @GetMapping("/reservations/{id}")
     public Reserva obtenerPorId(@PathVariable Long id) {
         Usuario usuario = obtenerUsuarioActual();
         Reserva reserva = reservaService.obtenerPorId(id);
 
-        // Si no es admin, solo puede ver sus propias reservas
         if (!esAdmin(usuario) && !reserva.usuario.id.equals(usuario.id)) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
@@ -86,13 +78,11 @@ public class ReservaController {
         return reserva;
     }
 
-    // Modificar una reserva existente
     @PatchMapping("/reservations/{id}")
     public Reserva modificar(@PathVariable Long id, @RequestBody Reserva datos) {
         Usuario usuario = obtenerUsuarioActual();
         Reserva reserva = reservaService.obtenerPorId(id);
 
-        // Validar permisos: solo admin o dueño puede modificar
         if (!esAdmin(usuario) && !reserva.usuario.id.equals(usuario.id)) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
@@ -100,7 +90,6 @@ public class ReservaController {
             );
         }
 
-        // Actualizar solo los campos permitidos
         if (datos.fechaReserva != null) {
             reserva.fechaReserva = datos.fechaReserva;
         }
@@ -114,13 +103,11 @@ public class ReservaController {
         return reservaService.modificarReserva(reserva);
     }
 
-    // Cancelar una reserva
     @DeleteMapping("/reservations/{id}")
     public void cancelar(@PathVariable Long id) {
         Usuario usuario = obtenerUsuarioActual();
         Reserva reserva = reservaService.obtenerPorId(id);
 
-        // Validar permisos: solo admin o dueño puede cancelar
         if (!esAdmin(usuario) && !reserva.usuario.id.equals(usuario.id)) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
@@ -131,23 +118,19 @@ public class ReservaController {
         reservaService.cancelarReserva(id);
     }
 
-    // Consultar disponibilidad de una pista concreta en una fecha
     @GetMapping("/courts/{id}/availability")
     public List<String> disponibilidad(@PathVariable Long id,
                                        @RequestParam LocalDate date) {
-        // Validar que la pista existe
         pistaService.buscarPista(id);
         return disponibilidadService.calcularDisponibilidad(id, date);
     }
 
-    // Endpoint de administración con filtros opcionales
     @GetMapping("/admin/reservations")
     public List<Reserva> listarAdmin(@RequestParam(required = false) LocalDate date,
                                      @RequestParam(required = false) Long courtId,
                                      @RequestParam(required = false) Long userId) {
         Usuario usuario = obtenerUsuarioActual();
 
-        // Solo un administrador puede usar este endpoint
         if (!esAdmin(usuario)) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
@@ -157,7 +140,6 @@ public class ReservaController {
 
         List<Reserva> reservas = reservaService.listarTodas();
 
-        // Aplicamos filtros solo si vienen informados
         if (date != null) {
             reservas.removeIf(r -> !date.equals(r.fechaReserva));
         }
@@ -171,12 +153,10 @@ public class ReservaController {
         return reservas;
     }
 
-    // Consultar la disponibilidad global de todas las pistas en una fecha
     @GetMapping("/availability")
     public Map<Long, List<String>> disponibilidadGlobal(@RequestParam LocalDate date) {
         Map<Long, List<String>> resultado = new HashMap<>();
 
-        // Recorremos todas las pistas y calculamos su disponibilidad
         pistaService.listarPistas().forEach(pista ->
                 resultado.put(
                         pista.idPista,
@@ -187,7 +167,6 @@ public class ReservaController {
         return resultado;
     }
 
-    // Método auxiliar para verificar si un usuario es ADMIN
     private boolean esAdmin(Usuario usuario) {
         return usuario.rol != null && "ADMIN".equalsIgnoreCase(usuario.rol.nombreRol);
     }

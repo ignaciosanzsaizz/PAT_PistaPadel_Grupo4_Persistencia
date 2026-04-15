@@ -59,13 +59,9 @@ class PistaPadelE2EFullTest {
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        // Suponiendo JWT
         return response.getBody();
     }
 
-    // =============================
-    // TEST 1: Crear pista (ADMIN)
-    // =============================
     @Test
     void createCourtTest() {
 
@@ -95,9 +91,6 @@ class PistaPadelE2EFullTest {
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
-    // =============================
-    // TEST 2: Crear reserva
-    // =============================
     @Test
     void createReservationTest() {
 
@@ -108,7 +101,6 @@ class PistaPadelE2EFullTest {
         HttpHeaders headers = jsonHeaders();
         headers.setBearerAuth(token);
 
-        // Crear pista primero
         String courtBody = """
                 {
                   "nombre": "Pista 1",
@@ -140,9 +132,6 @@ class PistaPadelE2EFullTest {
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
-    // =============================
-    // TEST 3: Conflicto de reserva
-    // =============================
     @Test
     void reservationConflictTest() {
 
@@ -187,9 +176,6 @@ class PistaPadelE2EFullTest {
         Assertions.assertEquals(HttpStatus.CONFLICT, conflict.getStatusCode());
     }
 
-    // =============================
-    // TEST 4: Obtener reservas
-    // =============================
     @Test
     void getReservationsTest() {
 
@@ -210,9 +196,6 @@ class PistaPadelE2EFullTest {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    // =============================
-    // TEST 5: Availability
-    // =============================
     @Test
     void availabilityTest() {
 

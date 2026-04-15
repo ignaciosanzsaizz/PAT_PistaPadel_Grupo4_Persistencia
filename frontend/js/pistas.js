@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    requireAuth();
+    renderSessionLinks();
 
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
@@ -8,6 +8,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     await cargarPistas();
 });
+
+function renderSessionLinks() {
+    const container = document.getElementById('session-links');
+    if (!container) {
+        return;
+    }
+
+    if (AuthService.isLoggedIn()) {
+        container.innerHTML = `
+            <a href="profile.html">Mi perfil</a>
+            <a href="mis-reservas.html">Mis reservas</a>
+            <a class="js-admin-only" href="admin.html">Admin</a>
+            <button id="logout-btn" class="logout-btn" type="button">Cerrar sesión</button>
+        `;
+    } else {
+        container.innerHTML = `
+            <a href="login.html">Entrar</a>
+            <a class="is-primary" href="register.html">Crear cuenta</a>
+        `;
+    }
+
+    AuthService.applyNavigationVisibility();
+}
 
 async function cargarPistas() {
     const mensajeEstado = document.getElementById('mensaje-estado');
@@ -20,7 +43,7 @@ async function cargarPistas() {
         listaPistas.innerHTML = '';
 
         if (!Array.isArray(pistas) || pistas.length === 0) {
-            mensajeEstado.textContent = 'No hay pistas disponibles.';
+            listaPistas.innerHTML = '<div class="empty-state">No hay pistas disponibles.</div>';
             return;
         }
 
@@ -43,12 +66,17 @@ async function cargarPistas() {
             const enlace = document.createElement('a');
             enlace.href = `pista.html?id=${pista.idPista}`;
             enlace.textContent = 'Ver detalle';
+            enlace.className = 'button-link is-primary';
+
+            const acciones = document.createElement('div');
+            acciones.className = 'card-actions';
 
             tarjeta.appendChild(nombre);
             tarjeta.appendChild(ubicacion);
             tarjeta.appendChild(precio);
             tarjeta.appendChild(estado);
-            tarjeta.appendChild(enlace);
+            acciones.appendChild(enlace);
+            tarjeta.appendChild(acciones);
 
             listaPistas.appendChild(tarjeta);
         });

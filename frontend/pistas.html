@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pistas</title>
+    <title>Pistas - Padel Club</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
@@ -13,17 +13,32 @@
 <body class="app-page">
 <header class="app-header">
     <div class="app-header-inner">
-        <h1>Listado de pistas</h1>
+        <div class="site-brand">
+            <a href="index.html">Padel Club</a>
+            <small>Listado actualizado de pistas</small>
+        </div>
         <nav class="app-nav">
-            <a href="profile.html">Mi perfil</a>
-            <button id="logout-btn" class="logout-btn" type="button">Cerrar sesión</button>
+            <a class="js-auth-only" href="pistas.html">Pistas</a>
+            <div id="session-links" class="session-links"></div>
         </nav>
     </div>
 </header>
 
 <main class="app-main">
+    <section class="content-card">
+        <p class="eyebrow">Explora</p>
+        <h1 class="section-heading">Listado de pistas</h1>
+        <p class="section-lead">Entra en cada pista para ver su disponibilidad y reservar un horario.</p>
+    </section>
+
     <p id="mensaje-estado" class="status-message">Cargando pistas...</p>
-    <section id="lista-pistas"></section>
+    <section id="lista-pistas" class="feature-grid"></section>
 </main>
+
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        Padel Club - Proyecto PAT | Consulta de pistas
+    </div>
+</footer>
 </body>
 </html>

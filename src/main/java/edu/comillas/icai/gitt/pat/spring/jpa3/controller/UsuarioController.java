@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/pistaPadel/users")
 public class UsuarioController {
@@ -15,21 +15,18 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // Regla: solo ADMIN lista usuarios
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<Usuario> listar() {
         return usuarioService.listar();
     }
 
-    // (Recomendado) ADMIN o dueño puede ver
     @PreAuthorize("hasRole('ADMIN') or @usuarioService.esDueno(#id, authentication.name)")
     @GetMapping("/{id}")
     public Usuario obtener(@PathVariable Long id) {
         return usuarioService.obtenerPorId(id);
     }
 
-    // Regla: solo dueño o ADMIN puede modificar
     @PreAuthorize("hasRole('ADMIN') or @usuarioService.esDueno(#id, authentication.name)")
     @PatchMapping("/{id}")
     public Usuario patch(@PathVariable Long id, @RequestBody Usuario cambios) {

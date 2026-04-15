@@ -47,7 +47,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/pistaPadel/auth/register", "/pistaPadel/auth/login", "/error").permitAll()
+                .requestMatchers("/pistaPadel/auth/register", "/pistaPadel/auth/login", "/pistaPadel/health", "/error").permitAll()
                 .anyRequest().authenticated()
         );
 

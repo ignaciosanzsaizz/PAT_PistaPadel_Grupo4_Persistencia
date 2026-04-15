@@ -11,14 +11,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await cargarDatosIniciales();
 });
 
-// Guardamos en memoria los datos cargados para reutilizarlos
 let pistasCache = [];
 let usuariosCache = [];
 let usuarioActualCargado = null;
 
-/*
-    Carga todo lo necesario al entrar en el panel admin.
-*/
 async function cargarDatosIniciales() {
     const mensajeEstado = document.getElementById('mensaje-estado');
 
@@ -32,9 +28,6 @@ async function cargarDatosIniciales() {
     }
 }
 
-/*
-    Conectamos todos los botones y formularios.
-*/
 function conectarEventos() {
     document.getElementById('form-pista').addEventListener('submit', guardarPista);
     document.getElementById('btn-cancelar-pista').addEventListener('click', limpiarFormularioPista);
@@ -48,9 +41,6 @@ function conectarEventos() {
     document.getElementById('btn-limpiar-filtros').addEventListener('click', limpiarFiltrosReservas);
 }
 
-/*
-    Devuelve el nombre del rol, manejando string u objeto.
-*/
 function obtenerNombreRol(user) {
     if (!user || !user.rol) {
         return '';
@@ -67,13 +57,6 @@ function obtenerNombreRol(user) {
     return '';
 }
 
-/* =========================================================
-   1. GESTIÓN DE PISTAS
-========================================================= */
-
-/*
-    Carga las pistas desde el backend y las pinta.
-*/
 async function cargarPistasAdmin() {
     const listaPistas = document.getElementById('lista-pistas-admin');
     const mensajePistas = document.getElementById('mensaje-pistas');
@@ -123,9 +106,6 @@ async function cargarPistasAdmin() {
     }
 }
 
-/*
-    Gestiona los botones Editar / Eliminar del bloque de pistas.
-*/
 function manejarAccionesPistas(event) {
     const boton = event.target.closest('button');
 
@@ -145,9 +125,6 @@ function manejarAccionesPistas(event) {
     }
 }
 
-/*
-    Mete una pista en el formulario para editar.
-*/
 function cargarPistaEnFormulario(idPista) {
     const pista = pistasCache.find((p) => String(p.idPista) === String(idPista));
 
@@ -162,10 +139,6 @@ function cargarPistaEnFormulario(idPista) {
     document.getElementById('activa-pista').checked = pista.activa;
 }
 
-/*
-    Guarda pista nueva o actualiza una existente.
-    POST y PATCH usan Pista directamente en el backend.
-*/
 async function guardarPista(event) {
     event.preventDefault();
 
@@ -179,14 +152,6 @@ async function guardarPista(event) {
         activa: document.getElementById('activa-pista').checked,
         fechaAlta: new Date().toISOString()
     };
-
-    /*
-        Ojo:
-        fechaAlta es nullable = false en la entity Pista.
-        Si al crear da error, puede que el backend no la esté rellenando solo.
-        En ese caso, descomenta esta línea:
-        datosPista.fechaAlta = new Date().toISOString();
-    */
 
     try {
         if (idPista) {
@@ -205,9 +170,6 @@ async function guardarPista(event) {
     }
 }
 
-/*
-    Elimina una pista.
-*/
 async function eliminarPista(idPista) {
     const mensajePistas = document.getElementById('mensaje-pistas');
     const confirmar = confirm('¿Seguro que quieres eliminar esta pista?');
@@ -226,24 +188,11 @@ async function eliminarPista(idPista) {
     }
 }
 
-/*
-    Limpia el formulario de pistas.
-*/
 function limpiarFormularioPista() {
     document.getElementById('form-pista').reset();
     document.getElementById('id-pista').value = '';
 }
 
-/* =========================================================
-   2. GESTIÓN DE USUARIOS
-========================================================= */
-
-/*
-    Carga los usuarios para:
-    - mostrarlos
-    - rellenar el select del filtro de reservas
-    - permitir cargar uno para editar
-*/
 async function cargarUsuariosAdmin() {
     const listaUsuarios = document.getElementById('lista-usuarios-admin');
     const selectUsuario = document.getElementById('select-usuario');
@@ -295,9 +244,6 @@ async function cargarUsuariosAdmin() {
     }
 }
 
-/*
-    Carga un usuario concreto en el formulario.
-*/
 async function cargarUsuarioSeleccionado() {
     const idUsuario = document.getElementById('select-usuario').value;
     const mensajeUsuarios = document.getElementById('mensaje-usuarios');
@@ -325,12 +271,6 @@ async function cargarUsuarioSeleccionado() {
     }
 }
 
-/*
-    Guarda cambios de usuario.
-    De momento editamos campos básicos y activo.
-    No toco el rol porque en backend rol es un objeto Rol, y sin ver UsuarioService.patch
-    es más seguro no modificarlo todavía desde frontend.
-*/
 async function guardarUsuario(event) {
     event.preventDefault();
 
@@ -359,22 +299,12 @@ async function guardarUsuario(event) {
     }
 }
 
-/*
-    Limpia el formulario de usuario.
-*/
 function limpiarFormularioUsuario() {
     document.getElementById('form-usuario').reset();
     document.getElementById('id-usuario').value = '';
     usuarioActualCargado = null;
 }
 
-/* =========================================================
-   3. RESERVAS ADMIN
-========================================================= */
-
-/*
-    Carga reservas admin con o sin filtros.
-*/
 async function cargarReservasAdmin(date = '', courtId = '', userId = '') {
     const listaReservas = document.getElementById('lista-reservas-admin');
     const mensajeReservas = document.getElementById('mensaje-reservas');
@@ -434,9 +364,6 @@ async function cargarReservasAdmin(date = '', courtId = '', userId = '') {
     }
 }
 
-/*
-    Lee filtros y llama al endpoint admin con query params.
-*/
 async function aplicarFiltrosReservas() {
     const fecha = document.getElementById('filtro-fecha').value;
     const courtId = document.getElementById('filtro-pista').value;
@@ -445,9 +372,6 @@ async function aplicarFiltrosReservas() {
     await cargarReservasAdmin(fecha, courtId, userId);
 }
 
-/*
-    Limpia filtros y recarga todo.
-*/
 async function limpiarFiltrosReservas() {
     document.getElementById('filtro-fecha').value = '';
     document.getElementById('filtro-pista').value = '';

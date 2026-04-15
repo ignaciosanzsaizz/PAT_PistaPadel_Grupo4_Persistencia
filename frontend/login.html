@@ -2,45 +2,64 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Reserva Pista Pádel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Padel Club</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/guards.js"></script>
-    <script>requireNoAuth(); // Guard: Evita que un usuario logueado vea esto</script>
+    <script>requireNoAuth();</script>
 </head>
-<body>
-    <div class="login-container">
-        <h2>Iniciar Sesión</h2>
-        <div id="error-message" style="color: red; display: none;"></div>
-        
-        <form id="login-form">
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            <input type="password" id="password" placeholder="Contraseña" required>
-            <button type="submit">Entrar</button>
-        </form>
-        <p>¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
-    </div>
+<body class="auth-page">
+
+    <main class="auth-layout">
+        <section class="auth-card">
+            <p class="eyebrow">Bienvenido de nuevo</p>
+            <h1 class="section-heading">Iniciar sesión</h1>
+            <p class="section-lead">Introduce tus datos para entrar a tu área personal.</p>
+
+            <div id="error-message" class="msg msg-error" style="display: none;"></div>
+
+            <form id="login-form">
+                <div>
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" placeholder="tu@email.com" required>
+                </div>
+                <div>
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Tu contraseña" required>
+                </div>
+                <button type="submit">Entrar</button>
+            </form>
+
+            <p><a href="index.html">Volver al inicio</a></p>
+            <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+        </section>
+    </main>
 
     <script>
         document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault(); // Evita recargar la página
-            
+            e.preventDefault();
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const errorDiv = document.getElementById('error-message');
-            
+
             try {
                 errorDiv.style.display = 'none';
                 await AuthService.login(email, password);
-                // Si el login es exitoso, redirigir al perfil
                 window.location.href = 'profile.html';
             } catch (error) {
-                // Mostrar el mensaje de error gestionado en api.js
                 errorDiv.textContent = error.message;
                 errorDiv.style.display = 'block';
             }
         });
     </script>
+
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            Padel Club - Proyecto PAT | Acceso de usuarios
+        </div>
+    </footer>
 </body>
 </html>

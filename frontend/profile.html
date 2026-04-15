@@ -3,68 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil - Reserva Pista Pádel</title>
+    <title>Mi Perfil - Padel Club</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/guards.js"></script>
-    <script>requireAuth(); // Guard: Obliga a estar autenticado</script>
-    <style>
-        .profile-card { border: 1px solid #ccc; padding: 20px; border-radius: 8px; max-width: 400px; margin-top: 20px;}
-        .loading { font-style: italic; color: #666; }
-    </style>
+    <script>requireAuth();</script>
 </head>
-<body>
-    <nav>
-        <button id="btn-logout" style="float: right;">Cerrar Sesión</button>
-        <h1>Mi Área Personal</h1>
-    </nav>
-
-    <div class="profile-card">
-        <h3>Datos del Usuario</h3>
-        <div id="profile-content">
-            <p class="loading">Cargando datos de forma segura...</p>
+<body class="app-page">
+<header class="app-header">
+    <div class="app-header-inner">
+        <div class="site-brand">
+            <a href="index.html">Padel Club</a>
+            <small>Tu área personal para gestionar todo</small>
         </div>
+        <nav class="app-nav">
+            <a href="pistas.html">Pistas</a>
+            <a href="mis-reservas.html">Mis reservas</a>
+            <a class="js-admin-only" href="admin.html">Admin</a>
+            <button id="btn-logout" class="logout-btn" type="button">Cerrar sesión</button>
+        </nav>
     </div>
+</header>
 
-    <script>
-        document.getElementById('btn-logout').addEventListener('click', () => {
-            AuthService.logout();
-        });
+<main class="app-main">
+    <section class="content-card">
+        <p class="eyebrow">Área personal</p>
+        <h1 class="section-heading">Mi perfil</h1>
+        <p class="section-lead">Desde aquí puedes acceder a pistas, reservas y al panel de administración si eres admin.</p>
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            const contentDiv = document.getElementById('profile-content');
+        <div class="profile-actions">
+            <a class="button-link is-primary" href="pistas.html">Ver pistas</a>
+            <a class="button-link" href="mis-reservas.html">Mis reservas</a>
+            <a class="button-link is-secondary js-admin-only" href="admin.html">Panel admin</a>
+        </div>
+    </section>
 
-            try {
-                const user = await AuthService.getMe();
+    <section class="content-card">
+        <h2 class="section-heading">Datos del usuario</h2>
+        <div id="profile-content" class="profile-info">
+            <p class="section-lead">Cargando datos de forma segura...</p>
+        </div>
+    </section>
+</main>
 
-                // Convertimos el rol a texto legible
-                let nombreRol = '';
+<script>
+    document.getElementById('btn-logout').addEventListener('click', () => {
+        AuthService.logout();
+    });
 
-                if (typeof user.rol === 'string') {
-                    nombreRol = user.rol;
-                } else if (user.rol && user.rol.nombreRol) {
-                    nombreRol = user.rol.nombreRol;
-                }
+    document.addEventListener('DOMContentLoaded', async () => {
+        const contentDiv = document.getElementById('profile-content');
 
-                contentDiv.innerHTML = `
+        try {
+            const user = await AuthService.getMe();
+
+            let nombreRol = '';
+
+            if (typeof user.rol === 'string') {
+                nombreRol = user.rol;
+            } else if (user.rol && user.rol.nombreRol) {
+                nombreRol = user.rol.nombreRol;
+            }
+
+            contentDiv.innerHTML = `
                 <p><strong>Nombre:</strong> ${user.nombre} ${user.apellidos}</p>
                 <p><strong>Email:</strong> ${user.email}</p>
                 <p><strong>Teléfono:</strong> ${user.telefono || 'No especificado'}</p>
-                <p><strong>Rol:</strong> <span style="background-color: #eee; padding: 2px 6px; border-radius: 4px;">${nombreRol}</span></p>
+                <p><strong>Rol:</strong> <span class="chip">${nombreRol || 'Sin rol'}</span></p>
                 <p><strong>Miembro desde:</strong> ${new Date(user.fechaRegistro).toLocaleDateString('es-ES')}</p>
-                ${
-                    nombreRol === 'ADMIN' || nombreRol === 'ROLE_ADMIN'
-                        ? '<p><a href="admin.html">Ir al panel de administración</a></p>'
-                        : ''
-                }
+                ${nombreRol === 'ADMIN' || nombreRol === 'ROLE_ADMIN' ? '<p><a href="admin.html">Ir al panel de administración</a></p>' : ''}
             `;
-            } catch (error) {
-                console.error("Error cargando el perfil:", error);
-                alert("Sesión expirada o inválida. Por favor, inicia sesión de nuevo.");
-                AuthService.logout();
-            }
-        });
-    </script>
+        } catch (error) {
+            console.error('Error cargando el perfil:', error);
+            alert('Sesión expirada o inválida. Por favor, inicia sesión de nuevo.');
+            AuthService.logout();
+        }
+    });
+</script>
+
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        Padel Club - Proyecto PAT | Area privada del usuario
+    </div>
+</footer>
 </body>
 </html>

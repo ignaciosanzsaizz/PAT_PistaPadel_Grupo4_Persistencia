@@ -1,8 +1,4 @@
 package edu.comillas.icai.gitt.pat.spring.jpa3.E2E.controller;
-
-// Comprobamos que el número de elementos devueltos en el JSON
-// coincide con el tamaño de la lista simulada por el servicio
-
 import edu.comillas.icai.gitt.pat.spring.jpa3.controller.PistaController;
 import edu.comillas.icai.gitt.pat.spring.jpa3.entity.Pista;
 import edu.comillas.icai.gitt.pat.spring.jpa3.service.PistaService;
@@ -33,7 +29,6 @@ public class PistaControllerTest {
     @WithMockUser(username = "ana@test.com", roles = "USER")
     void listarPistas_devuelve200_y_lista_json() throws Exception {
 
-        // Creamos dos pistas simuladas que devolverá el servicio
         Pista pista1 = new Pista();
         pista1.idPista = 1L;
         pista1.nombre = "Central";
@@ -50,13 +45,10 @@ public class PistaControllerTest {
         pista2.activa = true;
         pista2.fechaAlta = new Date();
 
-        // Guardamos las pistas en una lista
         List<Pista> pistas = List.of(pista1, pista2);
 
-        // Simulamos la respuesta del servicio
         when(pistaService.listarPistas()).thenReturn(pistas);
 
-        // Simulamos una petición GET al endpoint de listado de pistas
         mockMvc.perform(get("/pistaPadel/courts"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(pistas.size()))

@@ -24,14 +24,13 @@ class ReservaServiceTest {
     ReservaRepository reservaRepository;
 
     @Mock
-    EmailService emailService; // También mockeamos el email para que no envíe correos reales
+    EmailService emailService;
 
     @InjectMocks
     ReservaService reservaService;
 
     @Test
     void crearReserva() {
-        // GIVEN: Preparamos los datos
         Reserva reserva = new Reserva();
         reserva.usuario = new Usuario();
         reserva.usuario.email = "test@test.com";
@@ -40,13 +39,11 @@ class ReservaServiceTest {
 
         when(reservaRepository.save(any(Reserva.class))).thenReturn(reserva);
 
-        // WHEN: Ejecutamos el método del servicio
         Reserva resultado = reservaService.crearReserva(reserva);
 
-        // THEN: Verificamos resultados y comportamiento
         assertNotNull(resultado);
-        assertEquals(LocalTime.of(11, 0), resultado.horaFin); // Verificamos que se calculó la hora fin
-        verify(reservaRepository, times(1)).save(reserva); // Verificamos que se llamó al repo
-        verify(emailService, times(1)).enviarConfirmacion(any()); // Verificamos que se intentó enviar email
+        assertEquals(LocalTime.of(11, 0), resultado.horaFin);
+        verify(reservaRepository, times(1)).save(reserva);
+        verify(emailService, times(1)).enviarConfirmacion(any());
     }
 }

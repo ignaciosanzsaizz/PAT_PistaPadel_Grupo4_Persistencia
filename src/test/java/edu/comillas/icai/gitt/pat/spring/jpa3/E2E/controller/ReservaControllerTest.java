@@ -1,10 +1,5 @@
 package edu.comillas.icai.gitt.pat.spring.jpa3.E2E.controller;
 
-
-// Este test comprueba que el endpoint de disponibilidad de una pista responde correctamente.
-// Se simula el comportamiento del servicio para devolver unas franjas horarias libres
-// y se verifica que la petición GET devuelve estado 200 OK junto con la lista esperada en formato JSON.
-
 import edu.comillas.icai.gitt.pat.spring.jpa3.repos.PistaRepository;
 import edu.comillas.icai.gitt.pat.spring.jpa3.repos.UsuarioRepository;
 import edu.comillas.icai.gitt.pat.spring.jpa3.service.DisponibilidadService;
