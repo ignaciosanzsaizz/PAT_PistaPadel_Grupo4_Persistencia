@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de administración</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/guards.js"></script>
+    <script src="js/admin.js" defer></script>
+</head>
+<body class="app-page">
+<header class="app-header">
+    <div class="app-header-inner">
+        <h1>Panel de administración</h1>
+        <nav class="app-nav">
+            <a href="pistas.html">Pistas</a>
+            <a href="profile.html">Mi perfil</a>
+            <button id="logout-btn" class="logout-btn" type="button">Cerrar sesión</button>
+        </nav>
+    </div>
+</header>
+
+<main class="app-main">
+    <p id="mensaje-estado" class="status-message">Cargando panel de administración...</p>
+
+    <section class="content-card">
+        <h2>Gestión de pistas</h2>
+
+        <form id="form-pista">
+            <input type="hidden" id="id-pista">
+
+            <div>
+                <label for="nombre-pista">Nombre</label>
+                <input type="text" id="nombre-pista" required>
+            </div>
+
+            <div>
+                <label for="ubicacion-pista">Ubicación</label>
+                <input type="text" id="ubicacion-pista" required>
+            </div>
+
+            <div>
+                <label for="precio-pista">Precio por hora</label>
+                <input type="number" id="precio-pista" min="0" step="0.01" required>
+            </div>
+
+            <div>
+                <label for="activa-pista">Activa</label>
+                <input type="checkbox" id="activa-pista">
+            </div>
+
+            <button type="submit">Guardar pista</button>
+            <button type="button" id="btn-cancelar-pista">Cancelar</button>
+        </form>
+
+        <p id="mensaje-pistas" class="status-message"></p>
+        <section id="lista-pistas-admin"></section>
+    </section>
+
+    <section class="content-card">
+        <h2>Gestión de usuarios</h2>
+
+        <div>
+            <label for="select-usuario">Selecciona un usuario</label>
+            <select id="select-usuario">
+                <option value="">-- Selecciona un usuario --</option>
+            </select>
+            <button type="button" id="btn-cargar-usuario">Cargar usuario</button>
+        </div>
+
+        <form id="form-usuario">
+            <input type="hidden" id="id-usuario">
+
+            <div>
+                <label for="nombre-usuario">Nombre</label>
+                <input type="text" id="nombre-usuario">
+            </div>
+
+            <div>
+                <label for="apellidos-usuario">Apellidos</label>
+                <input type="text" id="apellidos-usuario">
+            </div>
+
+            <div>
+                <label for="email-usuario">Email</label>
+                <input type="email" id="email-usuario">
+            </div>
+
+            <div>
+                <label for="telefono-usuario">Teléfono</label>
+                <input type="text" id="telefono-usuario">
+            </div>
+
+            <div>
+                <label for="activo-usuario">Activo</label>
+                <input type="checkbox" id="activo-usuario">
+            </div>
+
+            <div>
+                <label for="rol-usuario">Rol</label>
+                <input type="text" id="rol-usuario" readonly>
+            </div>
+
+            <button type="submit">Guardar cambios usuario</button>
+            <button type="button" id="btn-cancelar-usuario">Cancelar</button>
+        </form>
+
+        <p id="mensaje-usuarios" class="status-message"></p>
+        <section id="lista-usuarios-admin"></section>
+    </section>
+
+    <section class="content-card">
+        <h2>Reservas admin</h2>
+
+        <div>
+            <label for="filtro-fecha">Fecha</label>
+            <input type="date" id="filtro-fecha">
+        </div>
+
+        <div>
+            <label for="filtro-pista">Pista</label>
+            <select id="filtro-pista">
+                <option value="">Todas</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="filtro-usuario">Usuario</label>
+            <select id="filtro-usuario">
+                <option value="">Todos</option>
+            </select>
+        </div>
+
+        <button type="button" id="btn-filtrar-reservas">Filtrar</button>
+        <button type="button" id="btn-limpiar-filtros">Limpiar filtros</button>
+
+        <p id="mensaje-reservas" class="status-message"></p>
+        <section id="lista-reservas-admin"></section>
+    </section>
+</main>
+</body>
+</html>

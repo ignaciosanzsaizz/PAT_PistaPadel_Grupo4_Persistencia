@@ -28,29 +28,38 @@
     </div>
 
     <script>
-        // Manejador del botón de Logout
         document.getElementById('btn-logout').addEventListener('click', () => {
             AuthService.logout();
         });
 
-        // Cargar los datos al iniciar la página
         document.addEventListener('DOMContentLoaded', async () => {
             const contentDiv = document.getElementById('profile-content');
-            
+
             try {
-                // Llamada a GET /auth/me usando las credenciales Basic guardadas
                 const user = await AuthService.getMe();
-                
-                // Renderizar los datos devueltos por el backend
+
+                // Convertimos el rol a texto legible
+                let nombreRol = '';
+
+                if (typeof user.rol === 'string') {
+                    nombreRol = user.rol;
+                } else if (user.rol && user.rol.nombreRol) {
+                    nombreRol = user.rol.nombreRol;
+                }
+
                 contentDiv.innerHTML = `
-                    <p><strong>Nombre:</strong> ${user.nombre} ${user.apellidos}</p>
-                    <p><strong>Email:</strong> ${user.email}</p>
-                    <p><strong>Teléfono:</strong> ${user.telefono || 'No especificado'}</p>
-                    <p><strong>Rol:</strong> <span style="background-color: #eee; padding: 2px 6px; border-radius: 4px;">${user.rol}</span></p>
-                    <p><strong>Miembro desde:</strong> ${new Date(user.fechaRegistro).toLocaleDateString('es-ES')}</p>
-                `;
+                <p><strong>Nombre:</strong> ${user.nombre} ${user.apellidos}</p>
+                <p><strong>Email:</strong> ${user.email}</p>
+                <p><strong>Teléfono:</strong> ${user.telefono || 'No especificado'}</p>
+                <p><strong>Rol:</strong> <span style="background-color: #eee; padding: 2px 6px; border-radius: 4px;">${nombreRol}</span></p>
+                <p><strong>Miembro desde:</strong> ${new Date(user.fechaRegistro).toLocaleDateString('es-ES')}</p>
+                ${
+                    nombreRol === 'ADMIN' || nombreRol === 'ROLE_ADMIN'
+                        ? '<p><a href="admin.html">Ir al panel de administración</a></p>'
+                        : ''
+                }
+            `;
             } catch (error) {
-                // Si da error (ej: 401 porque la password cambió en otro sitio), forzamos logout
                 console.error("Error cargando el perfil:", error);
                 alert("Sesión expirada o inválida. Por favor, inicia sesión de nuevo.");
                 AuthService.logout();

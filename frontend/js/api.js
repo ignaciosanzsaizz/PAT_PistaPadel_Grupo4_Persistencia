@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://tu-backend.render.com/pistaPadel'; // Cambia esto por vuestra URL real
+const API_BASE_URL = 'http://localhost:8080/pistaPadel'; // Cambia esto por vuestra URL real
 
 async function apiFetch(endpoint, method = 'GET', body = null) {
     const headers = { 'Content-Type': 'application/json' };
