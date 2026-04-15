@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Reserva Pista Pádel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/guards.js"></script>
+    <script>requireAuth(); // Guard: Obliga a estar autenticado</script>
+    <style>
+        .profile-card { border: 1px solid #ccc; padding: 20px; border-radius: 8px; max-width: 400px; margin-top: 20px;}
+        .loading { font-style: italic; color: #666; }
+    </style>
+</head>
+<body>
+    <nav>
+        <button id="btn-logout" style="float: right;">Cerrar Sesión</button>
+        <h1>Mi Área Personal</h1>
+    </nav>
+
+    <div class="profile-card">
+        <h3>Datos del Usuario</h3>
+        <div id="profile-content">
+            <p class="loading">Cargando datos de forma segura...</p>
+        </div>
+    </div>
+
+    <script>
+        // Manejador del botón de Logout
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            AuthService.logout();
+        });
+
+        // Cargar los datos al iniciar la página
+        document.addEventListener('DOMContentLoaded', async () => {
+            const contentDiv = document.getElementById('profile-content');
+            
+            try {
+                // Llamada a GET /auth/me usando las credenciales Basic guardadas
+                const user = await AuthService.getMe();
+                
+                // Renderizar los datos devueltos por el backend
+                contentDiv.innerHTML = `
+                    <p><strong>Nombre:</strong> ${user.nombre} ${user.apellidos}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Teléfono:</strong> ${user.telefono || 'No especificado'}</p>
+                    <p><strong>Rol:</strong> <span style="background-color: #eee; padding: 2px 6px; border-radius: 4px;">${user.rol}</span></p>
+                    <p><strong>Miembro desde:</strong> ${new Date(user.fechaRegistro).toLocaleDateString('es-ES')}</p>
+                `;
+            } catch (error) {
+                // Si da error (ej: 401 porque la password cambió en otro sitio), forzamos logout
+                console.error("Error cargando el perfil:", error);
+                alert("Sesión expirada o inválida. Por favor, inicia sesión de nuevo.");
+                AuthService.logout();
+            }
+        });
+    </script>
+</body>
+</html>

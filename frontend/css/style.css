@@ -1,0 +1,161 @@
+/* Importamos la fuente 'Inter' desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Variables Globales - Paleta Plateada / Acero (Premium Tech) */
+:root {
+    --brand-color: #64748B;       /* Plata oscuro / Acero mate */
+    --brand-hover: #475569;       /* Acero profundo (para hovers) */
+    --bg-app: #F8FAFC;            /* Fondo gris hielo casi blanco */
+    --surface: #FFFFFF;           /* Tarjetas blancas puras */
+    --text-main: #0F172A;         /* Negro pizarra */
+    --text-muted: #94A3B8;        /* Texto secundario gris plata */
+    --border-color: #E2E8F0;      /* Bordes gris claro */
+    --ring-color: rgba(100, 116, 139, 0.2); /* Anillo de focus plateado */
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.1);
+    --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.01);
+    --radius: 12px;
+}
+
+/* Reset y Base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Contenedores Principales (Efecto Tarjeta Flotante) */
+.auth-container, .profile-card {
+    background: var(--surface);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 420px;
+    margin: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Tipografía de Títulos */
+h1, h2 { 
+    text-align: center; 
+    color: var(--text-main); 
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 30px; 
+}
+
+/* Estilos de Formulario y Inputs Modernos */
+.form-group { margin-bottom: 20px; }
+
+label { 
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: 500; 
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+input {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--bg-app);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+/* Efecto Focus Premium */
+input:focus { 
+    outline: none; 
+    border-color: var(--brand-color); 
+    background-color: var(--surface);
+    box-shadow: 0 0 0 4px var(--ring-color);
+}
+
+/* Botones Premium */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--brand-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    margin-top: 10px;
+}
+
+button:hover { 
+    background-color: var(--brand-hover); 
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.2);
+}
+
+button:active { transform: translateY(0); }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Enlaces discretos */
+p { text-align: center; font-size: 0.875rem; color: var(--text-muted); margin-top: 20px; }
+a { color: var(--brand-color); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+a:hover { color: var(--brand-hover); text-decoration: underline; }
+
+/* Mensajes de Feedback Estilo Toast */
+.msg {
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: none;
+}
+.msg-error { display: block; background-color: #FEF2F2; color: #DC2626; border: 1px solid #FEE2E2; }
+.msg-success { display: block; background-color: #ECFDF5; color: #059669; border: 1px solid #D1FAE5; }
+
+/* Pantalla de Carga (Splash) Premium */
+.loading-screen { background-color: var(--brand-color); color: white; }
+.loading-screen h1 { color: white; }
+.loading-screen p { color: rgba(255,255,255,0.8); }
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
+    margin: 30px auto;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Diseño del Perfil Básico */
+.profile-info { margin-top: 20px; }
+.profile-info p { 
+    border-bottom: 1px solid var(--border-color); 
+    padding: 16px 0; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    text-align: left;
+    margin: 0;
+    color: var(--text-main);
+}
+.profile-info p:last-child { border-bottom: none; }
+.profile-info p strong { color: var(--text-muted); font-weight: 500; }
+.role-badge { background-color: var(--bg-app); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid var(--border-color);}
+
+.logout-btn { background-color: var(--surface); color: var(--text-main); border: 1px solid var(--border-color); box-shadow: none; }
+.logout-btn:hover { background-color: var(--bg-app); transform: none; box-shadow: none;}

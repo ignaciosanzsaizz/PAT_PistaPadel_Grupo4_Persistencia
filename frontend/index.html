@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padel App - Cargando...</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/auth.js"></script>
+</head>
+<body class="loading-page">
+    <div class="splash-container">
+        <h1>Reserva de Pistas</h1>
+        <p>Verificando tu sesión...</p>
+        <div class="loader"></div>
+    </div>
+
+    <script>
+        // Esperamos a que todo cargue
+        window.addEventListener('load', () => {
+            // Damos 1.5 segundos para que el usuario vea la animación (opcional)
+            setTimeout(() => {
+                if (AuthService.isLoggedIn()) {
+                    // Si hay token, al perfil
+                    window.location.replace('profile.html');
+                } else {
+                    // Si no, al login
+                    window.location.replace('login.html');
+                }
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

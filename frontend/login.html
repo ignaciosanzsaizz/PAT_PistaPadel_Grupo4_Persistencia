@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Reserva Pista Pádel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/guards.js"></script>
+    <script>requireNoAuth(); // Guard: Evita que un usuario logueado vea esto</script>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <div id="error-message" style="color: red; display: none;"></div>
+        
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Correo electrónico" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <p>¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Evita recargar la página
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error-message');
+            
+            try {
+                errorDiv.style.display = 'none';
+                await AuthService.login(email, password);
+                // Si el login es exitoso, redirigir al perfil
+                window.location.href = 'profile.html';
+            } catch (error) {
+                // Mostrar el mensaje de error gestionado en api.js
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
