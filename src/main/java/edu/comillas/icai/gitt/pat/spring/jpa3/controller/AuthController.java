@@ -16,13 +16,17 @@ public class AuthController {
     private UsuarioService usuarioService;
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED) // If it works, return HTTP 201 CREATED
     public Usuario register(@RequestBody Usuario usuario) {
+
+        // @RequestBody takes the JSON body and converts it into a Usuario object.
+        // Then we send that Usuario to the service.
+        // The service will validate/save/register the user.
         return usuarioService.registrar(usuario);
     }
 
     @GetMapping("/me")
-    public Usuario me(Authentication authentication) {
+    public Usuario me(Authentication authentication) { // me = method name, you choose this name
         return usuarioService.obtenerPorEmail(authentication.getName());
     }
 }
